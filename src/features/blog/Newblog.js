@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import User from './model/User';
 import * as actions from './redux/actions';
 
+
 export class Newblog extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,

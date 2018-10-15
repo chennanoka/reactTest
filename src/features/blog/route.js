@@ -2,7 +2,7 @@
 // Learn more from: http://rekit.js.org/docs/routing.html
 
 import {
-  DefaultPage,
+  Profile,
   Bloglist
 } from './';
 
@@ -10,6 +10,7 @@ export default {
   path: 'blog',
   name: 'Blog',
   childRoutes: [
-    { path: 'default-page', name: 'Blog', component: Bloglist, isIndex: true },
+    { path: '', name: 'Blog', component: Bloglist, isIndex: true },
+    { path: 'profile', name: 'Profile', component: Profile, isIndex: true },
   ],
 };
