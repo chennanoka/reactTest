@@ -1,11 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects' 
+import { call, put, takeLatest } from 'redux-saga/effects'
 import axios from 'axios';
 import {
   GET_POST,
   GET_POST_SUCCESS,
   GET_POST_FAILED
 } from './constants';
- 
+
 
 export const getPost = () => dispatch => {
   return dispatch({
@@ -36,7 +36,7 @@ function request(method, url, params = {}) {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-    data:JSON.stringify(body),
+    data: JSON.stringify(body),
   })
     .then(response => response.data)
     .catch((err) => { throw err.response; });
@@ -48,13 +48,13 @@ export function* watchPost() {
 
 function delay(ms) {
   return new Promise(function (resolve, reject) {
-      setTimeout(resolve, ms);
+    setTimeout(resolve, ms);
   });
 }
 
-function* doGetPost(action) {  
+function* doGetPost(action) {
   let res;
-  try { 
+  try {
     yield delay(10000);
     res = yield call(getPostRequest);
   } catch (err) {
@@ -85,7 +85,7 @@ export function reducer(state, action) {
         ...state,
         postPending: false,
         postError: null,
-        posts:action.data
+        posts: action.data
       };
 
     case GET_POST_FAILED:

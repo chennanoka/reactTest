@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Newblog from './Newblog';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 class BlogItem extends Component {
@@ -18,7 +18,7 @@ class BlogItem extends Component {
 
   render() {
     return (
-      <div key={this.props.blog.id}>
+      <div>
         <h3>{this.props.blog.title}</h3>
         <p>{this.props.blog.body}</p>
         <table>
@@ -53,37 +53,31 @@ export class Bloglist extends Component {
     actions: PropTypes.object.isRequired
   };
 
-  handleClick = () => {
-    this.state.redirectProfile = true;
-    this.setState(this.state);
+  handleClick = () => { 
+    this.setState({ ...this.state, redirectProfile: true});
   }
 
 
-  componentWillUnmount() {
-    this.state.count = "last execute componentWillUnmount";
+  componentWillUnmount() {  
   }
 
-  componentDidMount() {
-    this.state.count = "last execute componentDidMount";
+  componentDidMount() {  
   }
 
-  componentWillMount() {
-    this.state.count = "last execute componentWillMount";
+  componentWillMount() {  
   }
 
-  componentDidUpdate() {
-    this.state.count = "last execute componentDidUpdate";
+  componentDidUpdate() {  
   }
 
-  componentWillUpdate() {
-    this.state.count = "last execute componentWillUpdate";
+  componentWillUpdate() {  
   }
 
 
 
 
   onUserClick = (user) => {
-    this.setState({ user: user, showUser: true });
+    this.setState({ ...this.state, user: user, showUser: true });
   }
 
   onDeleteBlogClick = (id) => {
@@ -92,11 +86,8 @@ export class Bloglist extends Component {
 
   handleGetPostClick = () => {
     //fire async call
-    this.props.actions.getPost();
-    //set flag 
-    this.state.redirectPost = true;
-    //re-render
-    this.setState(this.state);
+    this.props.actions.getPost(); 
+    this.setState({ ...this.state, redirectPost: true}); 
   }
 
 
@@ -113,7 +104,7 @@ export class Bloglist extends Component {
       )
     }
     const items = this.props.blogs.map(blog => (
-      <BlogItem blog={blog} onItemClick={this.onUserClick} onItemDeleteClick={this.onDeleteBlogClick} />
+      <BlogItem blog={blog} key={blog.id} onItemClick={this.onUserClick} onItemDeleteClick={this.onDeleteBlogClick} />
     ));
     let headerItem;
     if (this.state.showUser && this.state.user) {
@@ -129,8 +120,7 @@ export class Bloglist extends Component {
       headerItem = (
         <div>
           <br />
-          <button onClick={this.handleClick}>View Profile</button>
-          <p>LifeCycle Info:{this.state.count}</p>
+          <button onClick={this.handleClick}>View Profile</button> 
         </div>);
     }
 
