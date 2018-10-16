@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Newblog from './Newblog';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 
 class BlogItem extends Component {
@@ -44,18 +44,20 @@ export class Bloglist extends Component {
       showUser: false,
       user: {},
       count: "",
-      profile: false
+      redirectProfile: false,
+      redirectPost: false
     }
   }
   static propTypes = {
     blogs: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
   };
 
   handleClick = () => {
-    this.state.profile = true;
+    this.state.redirectProfile = true;
     this.setState(this.state);
   }
+
 
   componentWillUnmount() {
     this.state.count = "last execute componentWillUnmount";
@@ -88,12 +90,24 @@ export class Bloglist extends Component {
     this.props.actions.deleteBlog(id);
   }
 
-  handleGetPostClick = () =>{
+  handleGetPostClick = () => {
+    //fire async call
     this.props.actions.getPost();
+    //set flag 
+    this.state.redirectPost = true;
+    //re-render
+    this.setState(this.state);
   }
 
+
   render() {
-    if (this.state.profile) {
+    if (this.state.redirectPost) {
+      return (
+        <Redirect to="/blog/posts" />
+      )
+    }
+
+    if (this.state.redirectProfile) {
       return (
         <Redirect to="/blog/profile" />
       )
@@ -101,8 +115,9 @@ export class Bloglist extends Component {
     const items = this.props.blogs.map(blog => (
       <BlogItem blog={blog} onItemClick={this.onUserClick} onItemDeleteClick={this.onDeleteBlogClick} />
     ));
+    let headerItem;
     if (this.state.showUser && this.state.user) {
-      headerItems = (
+      headerItem = (
         <div>
           <p>User Info</p>
           <p>{this.state.user.userId}</p>
@@ -111,24 +126,26 @@ export class Bloglist extends Component {
         </div>);
     }
     else {
-      headerItems = (
+      headerItem = (
         <div>
           <br />
           <button onClick={this.handleClick}>View Profile</button>
           <p>LifeCycle Info:{this.state.count}</p>
-        </div>)
+        </div>);
     }
+
     return (
       <div>
-        headerItems
+        {headerItem}
         <button onClick={this.handleGetPostClick}>Get Post</button>
-          <Newblog />
+        <Newblog />
         <p>Blog List</p>
         {items}
       </div>
     );
-  } 
+  }
 }
+
 
 
 /* istanbul ignore next */

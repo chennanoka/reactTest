@@ -3,7 +3,8 @@
 
 import {
   Profile,
-  Bloglist
+  Bloglist,
+  Posts
 } from './';
 
 export default {
@@ -12,5 +13,6 @@ export default {
   childRoutes: [
     { path: '', name: 'Blog', component: Bloglist, isIndex: true },
     { path: 'profile', name: 'Profile', component: Profile, isIndex: true },
+    { path: 'posts', name: 'Posts', component: Posts, isIndex: true }
   ],
 };

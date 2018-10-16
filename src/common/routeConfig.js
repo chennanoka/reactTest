@@ -1,15 +1,12 @@
-import { App } from '../features/home';
-import { Test } from '../features/common';
-import homeRoute from '../features/home/route';
-import commonRoute from '../features/common/route';
+import { App } from '../features/home'; 
+import homeRoute from '../features/home/route'; 
 import examplesRoute from '../features/examples/route';
 import blogRoute from '../features/blog/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
 const childRoutes = [
-  homeRoute,
-  commonRoute,
+  homeRoute, 
   examplesRoute,
   blogRoute,
 ];
@@ -18,8 +15,7 @@ const routes = [{
   path: '/',
   component: App,
   childRoutes: [
-    ...childRoutes,
-    { path: '*', name: 'hello', component: Test },
+    ...childRoutes, 
   ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)),
 }];
 

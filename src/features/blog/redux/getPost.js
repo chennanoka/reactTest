@@ -14,7 +14,7 @@ export const getPost = () => dispatch => {
 };
 
 function getPostRequest() {
-  return request('post', 'https://jsonplaceholder.typicode.com/posts');
+  return request('get', 'https://jsonplaceholder.typicode.com/posts');
 }
 
 function getQueryString(params) {
@@ -27,6 +27,7 @@ function getQueryString(params) {
 }
 
 function request(method, url, params = {}) {
+  const body = ['get', 'delete'].indexOf(method) === -1 ? params : undefined;
   const query = !body ? getQueryString(params) : undefined;
   return axios({
     method,
@@ -45,9 +46,16 @@ export function* watchPost() {
   yield takeLatest(GET_POST, doGetPost);
 }
 
+function delay(ms) {
+  return new Promise(function (resolve, reject) {
+      setTimeout(resolve, ms);
+  });
+}
+
 function* doGetPost(action) {  
   let res;
-  try {
+  try { 
+    yield delay(10000);
     res = yield call(getPostRequest);
   } catch (err) {
     yield put({
