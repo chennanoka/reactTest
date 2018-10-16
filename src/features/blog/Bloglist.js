@@ -84,8 +84,12 @@ export class Bloglist extends Component {
     this.setState({ user: user, showUser: true });
   }
 
-  onDeleteBlogClick=(id)=>{
+  onDeleteBlogClick = (id) => {
     this.props.actions.deleteBlog(id);
+  }
+
+  handleGetPostClick = () =>{
+    this.props.actions.getPost();
   }
 
   render() {
@@ -95,33 +99,35 @@ export class Bloglist extends Component {
       )
     }
     const items = this.props.blogs.map(blog => (
-      <BlogItem blog={blog} onItemClick={this.onUserClick} onItemDeleteClick={this.onDeleteBlogClick}/>
+      <BlogItem blog={blog} onItemClick={this.onUserClick} onItemDeleteClick={this.onDeleteBlogClick} />
     ));
     if (this.state.showUser && this.state.user) {
-      return (
+      headerItems = (
         <div>
           <p>User Info</p>
           <p>{this.state.user.userId}</p>
           <p>{this.state.user.userName}</p>
           <br />
-          <Newblog />
-          <p>Blog List</p>
-          {items}
-        </div>
-      );
-    } else {
-      return (
-        <div >
-          <br/>
+        </div>);
+    }
+    else {
+      headerItems = (
+        <div>
+          <br />
           <button onClick={this.handleClick}>View Profile</button>
           <p>LifeCycle Info:{this.state.count}</p>
-          <Newblog />
-          <p>Blog List</p>
-          {items}
-        </div>
-      );
+        </div>)
     }
-  }
+    return (
+      <div>
+        headerItems
+        <button onClick={this.handleGetPostClick}>Get Post</button>
+          <Newblog />
+        <p>Blog List</p>
+        {items}
+      </div>
+    );
+  } 
 }
 
 

@@ -1,0 +1,1 @@
+export { watchPost } from './getPost';

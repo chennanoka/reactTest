@@ -11,13 +11,16 @@ import { reducer as blogAddReducer } from './blogAdd';
 import { reducer as blogDeleteReducer } from './blogDelete'; 
 import { reducer as blogListReducer } from './blogList';  
 import { reducer as countReducer } from './count'; 
+import { reducer as getPostReducer } from './getPost'; 
+
 
 
 const reducers = [
   blogAddReducer,
   blogDeleteReducer,
   blogListReducer,
-  countReducer
+  countReducer,
+  getPostReducer
 ];
 
 export default function reducer(state = initialState, action) {

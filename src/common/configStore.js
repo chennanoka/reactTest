@@ -3,13 +3,17 @@ import thunk from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import history from './history';
 import rootReducer from './rootReducer';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './rootSaga';
 
 const router = routerMiddleware(history);
+const sagaMiddleware = createSagaMiddleware();
 
 // NOTE: Do not change middleares delaration pattern since rekit plugins may register middlewares to it.
 const middlewares = [
   thunk,
   router,
+  sagaMiddleware
 ];
 
 let devToolsExtension = f => f;
@@ -40,5 +44,6 @@ export default function configureStore(initialState) {
       store.replaceReducer(nextRootReducer);
     });
   }
+  sagaMiddleware.run(rootSaga);
   return store;
 }
